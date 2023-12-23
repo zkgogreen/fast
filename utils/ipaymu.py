@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 import hashlib
 import hmac
-from user.models import Users
+from user.models.User import Users
 
 
 ipaymuVa  = "0000002211550124" #your iPaymu VA

@@ -1,8 +1,9 @@
 from utils.app import auth, kelas
 from user.models.User import Users
 from user.models.Lesson import UserCourse
-from user.models.Course import UserMeeting
-from teacher.models import Pelajaran, UserSchadule, Room
+from user.models.Course import UserMeeting, UserSchadule
+from teacher.models.kelas import Pelajaran
+from teacher.models.course import Room
 from django.shortcuts import redirect, render
 import datetime
 # Create your views here.

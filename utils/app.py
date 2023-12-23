@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from user.models import Cart, Users, UserCourse, UserLesson
-from teacher.models import Pelajaran
-from owner.models import Setting as land
+from user.models.Lesson import UserCourse, UserLesson
+from user.models.User import Users
+from teacher.models.kelas import Pelajaran
+from dashboard.models.setting import Setting as land
 from django.db.models import Avg
 
 def kelas(request, many=True):

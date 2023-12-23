@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Users
-from owner.models import Langganan
+from user.models.User import Users
+from dashboard.models.account import Langganan
 import datetime
 
 context = {

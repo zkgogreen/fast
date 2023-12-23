@@ -28,7 +28,12 @@ def random_date(start_date, end_date):
     return random_date_result
 
 def index(request):
-    return render(request, 'index.html')
+    context = {
+        'user':Users.objects.all().count(),
+        'teacher':Status.objects.all().count(),
+        'module':Pelajaran.objects.all().count()
+    }
+    return render(request, 'index.html', context)
 
 def home(request):
     return redirect("user:index")
@@ -73,7 +78,7 @@ def begin(request):
 
     #Landing
     if not Setting.objects.all().exists():
-        Setting.objects.create(title="Belajar bahasa inggris", sub="belajar bahasa inggris")
+        Setting.objects.create(title="Mahir SPEAKING di bulan pertama", sub="Kuasai Bahasa Inggris dengan Lebih Cepat: Speaking Sebagai Native Speaker dalam Sebulan Tanpa Hafalan!", icon="landing/icon.png", logo="landing/icon.png", foto="landing/jumbotron.png")
     
     user_list = []
     user_obj_list = []

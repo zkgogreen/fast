@@ -3,9 +3,11 @@ from utils.ipaymu import pay, transaksi
 from utils.mydate import fetchday
 from user.models.User import  Users
 from user.models.Course import UserMeeting, UserSchadule, UserMentor
-from teacher.models import Room, Teacher, Schadule
+from teacher.models.course import Room, Schadule
+from teacher.models.teacher import Teacher
 from dashboard.models.account import LevelAkun
-from dashboard.models.setting import Setting, Earn
+from dashboard.models.setting import Setting
+from dashboard.models.earn import Earn
 from datetime import datetime
 from django.shortcuts import redirect, HttpResponse, render
 from django.db.models import Sum, F

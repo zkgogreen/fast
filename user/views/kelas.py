@@ -1,12 +1,12 @@
-from app.app import auth
-from teacher.models import Kelas, Pelajaran, Bab, Questions
-from .models import UserCourse, UserLesson, Users, UserQuestion, UserLatihan, UserBab
+from utils.app import auth
+from teacher.models.kelas import Kelas, Pelajaran, Bab, Questions
+from user.models.Lesson import UserCourse, UserLesson, Users, UserQuestion, UserLatihan, UserBab
 from django.http import JsonResponse
 from django.views import View
 from django.db.models import Avg
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from user.util.pelajaran import bab_navigate
+from user.utils.pelajaran import bab_navigate
 from user.forms import FormKomentar
 
 # Create your views here.
