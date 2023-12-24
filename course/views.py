@@ -6,7 +6,7 @@ from teacher.models.course import Room, Schadule
 from teacher.models.kelas import Kelas, Bab, Pelajaran, Questions
 from teacher.models.teacher import Withdrow
 from user.models.Course import UserMeeting, UserSchadule
-from user.models.User import Users, Status
+from user.models.User import Users
 from user.models.Lesson import UserBab, UserCourse, UserLatihan, UserLesson
 from django.contrib.auth.models import User as user_root
 
@@ -29,8 +29,8 @@ def random_date(start_date, end_date):
 
 def index(request):
     context = {
-        'user':Users.objects.all().count(),
-        'teacher':Status.objects.all().count(),
+        'user':Users.objects.filter(teacher=False).count(),
+        'teacher':Users.objects.filter(teacher=True).count(),
         'module':Pelajaran.objects.all().count()
     }
     return render(request, 'index.html', context)
@@ -40,11 +40,11 @@ def home(request):
 
 def begin(request):
     # level akun
-    levelakun1  = LevelAkun.objects.create(foto="free.jpg",people=50,meeting=30, name='free', keterangan='belajar bahasa inggris tidak butuh biaya',  nyawa=5, biaya=10000, discount=10000,promo=0,materi="GRAMMAR FOR SPEAKING, PRONUNCIATION, VOCABULARY, SPEAKING PRACTICE", bonus="Garansi mengulang, Free 60x Written Class, Free 10x Pronunciation Class, Gratis konsultasi langsung dengan tutor", ketentuan="Microphone wajib aktif ketika sesi praktek, Biaya tidak hangus jika tidak hadir, Bebas pilih jadwal atau merubah jadwal, Dilarang keras membahas isu politik atau SARA ketika praktek"),
-    levelakun2  = LevelAkun.objects.create(foto="private.jpg",people=30,meeting=30, name='membersip', keterangan='belajar bahasa inggris dengan intensif',  nyawa=100, biaya=80000,discount=80000,promo=0,materi="GRAMMAR FOR SPEAKING, PRONUNCIATION, VOCABULARY, SPEAKING PRACTICE", bonus="Garansi mengulang, Free 60x Written Class, Free 10x Pronunciation Class, Gratis konsultasi langsung dengan tutor", ketentuan="Microphone wajib aktif ketika sesi praktek, Biaya tidak hangus jika tidak hadir, Bebas pilih jadwal atau merubah jadwal, Dilarang keras membahas isu politik atau SARA ketika praktek")
-    levelakun3  = LevelAkun.objects.create(foto="regular.jpg",people=10,meeting=30, name='Premium', keterangan='belajar bahasa inggris tanpa batasan', nyawa=100, biaya=120000,discount=120000,promo=0,materi="GRAMMAR FOR SPEAKING, PRONUNCIATION, VOCABULARY, SPEAKING PRACTICE", bonus="Garansi mengulang, Free 60x Written Class, Free 10x Pronunciation Class, Gratis konsultasi langsung dengan tutor", ketentuan="Microphone wajib aktif ketika sesi praktek, Biaya tidak hangus jika tidak hadir, Bebas pilih jadwal atau merubah jadwal, Dilarang keras membahas isu politik atau SARA ketika praktek")
-    levelakun4  = LevelAkun.objects.create(foto="regular.jpg",people=1,meeting=30, name='Private', keterangan='belajar bahasa inggris tanpa batasan', nyawa=100, biaya=240000,discount=240000,promo=0,materi="GRAMMAR FOR SPEAKING, PRONUNCIATION, VOCABULARY, SPEAKING PRACTICE", bonus="Garansi mengulang, Free 60x Written Class, Free 10x Pronunciation Class, Gratis konsultasi langsung dengan tutor", ketentuan="Microphone wajib aktif ketika sesi praktek, Biaya tidak hangus jika tidak hadir, Bebas pilih jadwal atau merubah jadwal, Dilarang keras membahas isu politik atau SARA ketika praktek")
-    levelakun5  = LevelAkun.objects.create(foto="regular.jpg",people=1,meeting=30, name='Private with foregn', keterangan='belajar bahasa inggris tanpa batasan', nyawa=100, biaya=500000,discount=500000,promo=0,materi="GRAMMAR FOR SPEAKING, PRONUNCIATION, VOCABULARY, SPEAKING PRACTICE", bonus="Garansi mengulang, Free 60x Written Class, Free 10x Pronunciation Class, Gratis konsultasi langsung dengan tutor", ketentuan="Microphone wajib aktif ketika sesi praktek, Biaya tidak hangus jika tidak hadir, Bebas pilih jadwal atau merubah jadwal, Dilarang keras membahas isu politik atau SARA ketika praktek")
+    levelakun1  = LevelAkun.objects.create(foto="level/free.png",people=50,meeting=30, name='free', keterangan='belajar bahasa inggris tidak butuh biaya',  nyawa=5, biaya=10000, discount=10000,promo=0,materi="GRAMMAR FOR SPEAKING, PRONUNCIATION, VOCABULARY, SPEAKING PRACTICE", bonus="Garansi mengulang, Free 60x Written Class, Free 10x Pronunciation Class, Gratis konsultasi langsung dengan tutor", ketentuan="Microphone wajib aktif ketika sesi praktek, Biaya tidak hangus jika tidak hadir, Bebas pilih jadwal atau merubah jadwal, Dilarang keras membahas isu politik atau SARA ketika praktek"),
+    levelakun2  = LevelAkun.objects.create(foto="level/private.png",people=30,meeting=30, name='membersip', keterangan='belajar bahasa inggris dengan intensif',  nyawa=100, biaya=80000,discount=80000,promo=0,materi="GRAMMAR FOR SPEAKING, PRONUNCIATION, VOCABULARY, SPEAKING PRACTICE", bonus="Garansi mengulang, Free 60x Written Class, Free 10x Pronunciation Class, Gratis konsultasi langsung dengan tutor", ketentuan="Microphone wajib aktif ketika sesi praktek, Biaya tidak hangus jika tidak hadir, Bebas pilih jadwal atau merubah jadwal, Dilarang keras membahas isu politik atau SARA ketika praktek")
+    levelakun3  = LevelAkun.objects.create(foto="level/premium.png",people=10,meeting=30, name='Premium', keterangan='belajar bahasa inggris tanpa batasan', nyawa=100, biaya=120000,discount=120000,promo=0,materi="GRAMMAR FOR SPEAKING, PRONUNCIATION, VOCABULARY, SPEAKING PRACTICE", bonus="Garansi mengulang, Free 60x Written Class, Free 10x Pronunciation Class, Gratis konsultasi langsung dengan tutor", ketentuan="Microphone wajib aktif ketika sesi praktek, Biaya tidak hangus jika tidak hadir, Bebas pilih jadwal atau merubah jadwal, Dilarang keras membahas isu politik atau SARA ketika praktek")
+    levelakun4  = LevelAkun.objects.create(foto="level/private.png",people=1,meeting=30, name='Private', keterangan='belajar bahasa inggris tanpa batasan', nyawa=100, biaya=240000,discount=240000,promo=0,materi="GRAMMAR FOR SPEAKING, PRONUNCIATION, VOCABULARY, SPEAKING PRACTICE", bonus="Garansi mengulang, Free 60x Written Class, Free 10x Pronunciation Class, Gratis konsultasi langsung dengan tutor", ketentuan="Microphone wajib aktif ketika sesi praktek, Biaya tidak hangus jika tidak hadir, Bebas pilih jadwal atau merubah jadwal, Dilarang keras membahas isu politik atau SARA ketika praktek")
+    levelakun5  = LevelAkun.objects.create(foto="level/foregn.png",people=1,meeting=30, name='Private with foregn', keterangan='belajar bahasa inggris tanpa batasan', nyawa=100, biaya=500000,discount=500000,promo=0,materi="GRAMMAR FOR SPEAKING, PRONUNCIATION, VOCABULARY, SPEAKING PRACTICE", bonus="Garansi mengulang, Free 60x Written Class, Free 10x Pronunciation Class, Gratis konsultasi langsung dengan tutor", ketentuan="Microphone wajib aktif ketika sesi praktek, Biaya tidak hangus jika tidak hadir, Bebas pilih jadwal atau merubah jadwal, Dilarang keras membahas isu politik atau SARA ketika praktek")
     
     level_akun_list = [levelakun1, levelakun2, levelakun3, levelakun4, levelakun5]
     #level
@@ -67,7 +67,7 @@ def begin(request):
     #kelas
 
     for k in range(3):
-        kelas = Kelas.objects.create(kelas="Kelas ke-"+str(k), bahasa=1, slug="SpeakingDasar", photo="kelas/bannerexample2.png", kategori=kategori1, level=level1,keterangan="keterangan", rangkuman="rangkuman", urutan=k)
+        kelas = Kelas.objects.create(kelas="Kelas ke-"+str(k), bahasa=1, slug="KelasKe-"+str(k), photo=f'kelas/banner{k}.png', kategori=kategori1, level=level1,keterangan="keterangan", rangkuman="rangkuman", urutan=k)
         for i in range(5):
             bab = Bab.objects.create(kelas=kelas, bab="kelas {} Bab {}".format(k, i), urutan=i, rangkuman="ini adalah rangkuman")
             for j in range(5):
@@ -92,8 +92,7 @@ def begin(request):
     mentor_obj_list = []
     for u in range(5):
         mentor = user_root.objects.create_user(username="mentor_"+str(u), email="mentor_{}@localhost".format(u), first_name="mentor", last_name="ke-"+str(u), password="mentor1234")
-        mentor_obj = Users.objects.create(user=mentor)
-        mentor_status = Status.objects.create(user=mentor, teacher=True)
+        mentor_obj = Users.objects.create(user=mentor, teacher=True)
         mentor_list.append(mentor)
         mentor_obj_list.append(mentor_obj)
 
