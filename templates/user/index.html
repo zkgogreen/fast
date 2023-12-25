@@ -1,71 +1,57 @@
 {% extends 'dashboard.html' %}
 {% load custom_tags %}
-
 {% load static %}
-{% block head %}
-{% endblock head %}
-{% block css %}
-{% endblock css %}
+
+{% block title %}index{% endblock %}
 {% block content %}
 <div class="content">
   <div class="row">
-      <div class="col-md-12 col-lg-6"  style="height: 100px;">
-        <div class="d-flex flex-column flex-md-row h-100 bg-white shadow-sm px-4 rounded-3">
-          <div class="col-6 align-self-center">
-            <div class="d-flex justify-content-between">
-              <h5 class="fw-bold text-uppercase">
-                {% if me.premium %}Premium{% else %} <a href="{% url 'user:upgrade' %}" class="text-decoration-none">FREE <i class="ms-3 fa-solid fa-arrow-up-right-from-square"></i></a>{% endif %}
-              </h5>
-              <h4 class="fw-bold text-primary">{{me.xp}} XP</h4>
-            </div>
-            <div class="progress">
-              <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-          </div>
-          <div class="col-6 align-self-center">
-            <div class="d-flex pt-3 justify-content-sm-start justify-content-lg-end justify-content-md-end">
-              <span class='h3 me-2'><i class="fas fa-crown text-primary me-2"></i>{{me.mahkota}}</span>
-              <span class='h3 me-2'><i class="fas fa-star text-warning me-2"></i>{{me.game}}</span>
-              <span class='h3 me-2'><i class="fas fa-heart text-danger me-2"></i>{{me.nyawa}}</span>
-            </div>
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-3">
+          <div class=" bg-white shadow p-2 m-1 rounded-3 w-100" style="height: 80px;">
+            <h4>{% if me.premium %}Premium{% else %}FREE{% endif %}</h4>
+            <a href="{% url 'user:upgrade' %}" class="h5 text-decoration-none text-primary d-flex justify-content-between w-100">Upgrade <i class="fa-solid fa-angle-right"></i></a>
           </div>
         </div>
-      </div>
-      <div class="col-md-12 col-lg-6" style="height: 100px;">
-        <div class="bg-white shadow-sm px-4 h-100 rounded-3" >
-          {% if mentor %}
-          <div class="d-flex justify-content-between" style="height: 100%;">
-            <div class="d-flex">
-              <div class="circular-portrait align-self-center " style="margin-left: -15px; border:solid 5px #fff;">
-                <img src="/media/{{mentor.mentorprofile.photo}}" alt="profile" />
-              </div>
-              <div class="ms-3 lh-1 align-self-center">
-                <span class="text-muted text-uppercase h4">{{mentor.mentor.first_name}} {{mentor.mentor.last_name}}</span><br>
-                <div class="text-secondary fw-semibold ms-1">{{mentor.start|date:"d M Y"}} - {{mentor.end|date:"d M Y"}} </div>
-              </div>
-            </div>
-            <div class="align-self-center">
-              <h3>{{mentor.meetremains}}/{{mentor.room.level.meeting}}</h3>
-            </div>
-          {% else %}
-            <div class="d-flex justify-content-between h-100">
-              <div class="align-self-center">
-                <div class="d-flex flex-row ps-3" >
-                  {% for m in mentorlist %}
-                  <div class="circular-portrait btn-hover" style="margin-left: -15px; border:solid 5px #fff;">
-                    <img src="{% if m.photo %}{{m.photo}}{% else %}/media/profile/image{% random_int 1 24 %}.jpg{% endif %}" alt=""> 
-                  </div>
-                  {% endfor %}
+        <div class="col-md-3">
+          <div class=" bg-white shadow p-2 m-1 rounded-3 w-100" style="height: 80px;">
+            <h4>Level</h4>
+            <div class="text-primary d-flex justify-content-between">{{me.level.name}} <i class="fa-solid fa-angle-right"></i></div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class=" bg-white shadow p-2 m-1 rounded-3 w-100" style="height: 80px;">
+            {% if mentor.mentor %}
+            <div class="d-flex justify-content-between w-100">
+              <div class="lh-1">
+                <h4>Mentor</h4>
+                <div style="line-height: 2px;">
+                  <span class="text-muted text-uppercase h4">{{mentor.mentor.first_name}} {{mentor.mentor.last_name}}</span><br>
+                  <div class="text-secondary fw-semibold ms-1">{{mentor.start|date:"d M"}} - {{mentor.end|date:"d M"}} </div>
                 </div>
               </div>
-              <div class="align-self-center">
-                <a href="{% url 'user:purchase_bootcamp' %}" class="btn btn-lg rounded-0 btn-primary fw-bold">Cari Mentor</a>
-              </div>
+              <a href="#" class="align-self-center h3 text-primary"><i class="fas fa-message"></i></a>
             </div>
+            {% else %}
+            <h4>Mentor</h4>
+            <a href="{% url 'user:bootcamp' %}" class="h5 text-primary text-decoration-none d-flex justify-content-between w-100">Cari mentor <i class="fa-solid fa-angle-right"></i></a>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class=" bg-white shadow p-2 m-1 rounded-3 w-100" style="height: 80px;">
+            <h4>Kelas</h4>
+            {% if kelas %}
+            {% else %}
+            <a href="{% url 'user:kelas' %}" class="h5 text-decoration-none text-primary d-flex justify-content-between w-100">Cari Kelas <i class="fa-solid fa-angle-right"></i></a>
             {% endif %}
           </div>
         </div>
       </div>
+    </div>
+  </div>
+<div class="row">
 
       <!-- kelas -->
       <div class="container row" style="margin-top: 30px;">
@@ -142,7 +128,7 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
 
 {% endblock content %}
 {% block script %}

@@ -67,7 +67,7 @@ def begin(request):
     #kelas
 
     for k in range(3):
-        kelas = Kelas.objects.create(kelas="Kelas ke-"+str(k), bahasa=1, slug="KelasKe-"+str(k), photo=f'kelas/banner{k}.png', kategori=kategori1, level=level1,keterangan="keterangan", rangkuman="rangkuman", urutan=k)
+        kelas = Kelas.objects.create(kelas="Kelas ke-"+str(k), bahasa=1, slug="KelasKe-"+str(k), photo=f'kelas/banner{k}.jpg', kategori=kategori1, level=level1,keterangan="keterangan", rangkuman="rangkuman", urutan=k)
         for i in range(5):
             bab = Bab.objects.create(kelas=kelas, bab="kelas {} Bab {}".format(k, i), urutan=i, rangkuman="ini adalah rangkuman")
             for j in range(5):

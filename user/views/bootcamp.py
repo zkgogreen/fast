@@ -1,6 +1,7 @@
 from utils.app import auth, kelas
 from utils.ipaymu import pay, transaksi
 from utils.mydate import fetchday
+from utils.midtrans import midtrans, status
 from user.models.User import  Users
 from user.models.Course import UserMeeting, UserSchadule, UserMentor
 from teacher.models.course import Room, Schadule
@@ -77,31 +78,35 @@ def purchase_bootcamp(request):
 
 def confirm(request,id):
     account = LevelAkun.objects.get(id=id)
-    nextmonth = x.replace(month=x.month+account.duration)
+    account = LevelAkun.objects.get(id=id)
+    nextmonth = x.replace(month=(x.month + account.duration) % 12 + 1)
+
     if nextmonth.month == 1:
-        nextmonth = nextmonth.replace(year=nextmonth.year+1)
+        nextmonth = nextmonth.replace(year=nextmonth.year + 1)
 
     meeting = UserMeeting.objects.create(user=request.user, accountlevel=account, end=nextmonth, meetremain=account.meeting)
     product = account.name
     price = account.biaya
     ref_id = meeting.id
-    url, SessionID = pay(request, product, price, ref_id)
+    url, SessionID = midtrans(request, price, ref_id)
+    # url, SessionID = pay(request, product, price, ref_id)
     meeting.SessionID = SessionID
     meeting.save()
     return redirect(url)
 
 
+
 def thank(request):
-    id = request.GET.get('trx_id')
-    trans = transaksi(id)
-    if request.GET.get('status') == "berhasil":
-        meeting = UserMeeting.objects.get(SessionID=trans["Data"]["SessionId"])
+    id = request.GET.get('order_id')
+    trans = status(id)
+    if request.GET.get('transaction_status') == "settlement":
+        meeting = UserMeeting.objects.get(id=id)
         meeting.purchased = True
         meeting.trx_id = id
-        meeting.via = trans["Data"]["Sender"]
-        meeting.status = trans["Message"]
+        meeting.via = trans["transaction_id"]
+        meeting.status = trans["status_message"]
         meeting.save()
-        return auth(request, 'bootcamp/thank', context={})
+        return render(request, "user/bootcamp/thank.html", context={})
     else:
         UserMeeting.objects.filter(SessionID=trans["Data"]["SessionId"]).delete()
         return redirect('user:purchase_bootcamp')

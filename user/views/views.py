@@ -8,11 +8,7 @@ from django.shortcuts import redirect, render
 import datetime
 # Create your views here.
 
-context = {
-    'url':'index',
-    'title':'index',
-    'icon':'static/assets/icon.png'
-}
+context = {}
 def checkuser(request):
     user = Users.objects.filter(user=request.user.id)
     if not user.exists():

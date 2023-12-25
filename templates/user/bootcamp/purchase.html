@@ -1,4 +1,4 @@
-{% extends 'user/base.html' %}
+{% extends 'dashboard.html' %}
 {% load static %}
 {% load humanize %}
 {% block head %}
@@ -29,17 +29,17 @@
 <div class="content">
     <div class="my-4 container">
         <div class="display-4 fw-semibold text-center my-2 pb-3">Belajar dengan tutor</div>
-        <div class="row gap-3">
+        <div class="row ">
             {% for p in paket %}
             <div class="col-12 col-md-3">
-                <div class="shadow bg-white">
+                <div class="shadow bg-white m-2">
                     <img src="/media/{{p.foto}}" alt="" class="w-100" style="height: 200px; object-fit: cover;">
                     <div class="p-2">
                         <h5 class="text-uppercase fw-bold">{{p.name}}</h5>
                         <div class="fw-ligther mb-2">{{p.people}} orang per kelas</div>
-                        <h5 class="text-danger" style="text-decoration: line-through red;">Rp. {{p.biaya|cut:"000"|intcomma}}</h5>
+                        {% if p.discount != p.biaya %}<h5 class="text-danger" style="text-decoration: line-through red;">Rp. {{p.biaya|cut:"000"|intcomma}}K</h5>{% endif %}
                         <h5>Rp.{{p.discount|cut:"000"|intcomma}}K<span class="h6 fw-ligther mb-4">/{{p.meeting}}x Pertemuan</span></h5>
-                        <p class="text-secondary" style="height: 120px;">{{p.keterangan}}</p>
+                        <p class="text-secondary">{{p.keterangan}}</p>
                     </div>
                     <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item">
